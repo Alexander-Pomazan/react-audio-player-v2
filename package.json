@@ -6,9 +6,9 @@
   "scripts": {
     "test": "jest",
     "lint:css": "jest --config test/jest.stylelint.js",
+    "lint": "jest --config test/jest.eslint.js",
     "dev": "webpack-dev-server --mode=development",
     "build": "webpack --mode=production",
-    "lint": "jest --config test/jest.eslint.js",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(ts|tsx|js|json|css|html|md)\""
   },
   "author": "Alexander-Pomazan",
