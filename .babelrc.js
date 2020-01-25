@@ -7,4 +7,5 @@ module.exports = {
     '@babel/preset-typescript',
     'linaria/babel',
   ],
+  plugins: ['react-hot-loader/babel'],
 }

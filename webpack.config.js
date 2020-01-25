@@ -10,13 +10,16 @@ module.exports = {
     overlay: true,
     publicPath: '/',
   },
-  entry: './src/index.tsx',
+  entry: ['react-hot-loader/patch', './src'],
   output: {
     path: path.resolve('dist'),
     filename: 'bundle.js',
   },
   resolve: {
-    extensions: ['.tsx', '.ts'],
+    extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      'react-dom': '@hot-loader/react-dom',
+    },
   },
   module: {
     rules: [
