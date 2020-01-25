@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from 'react'
 import ReactDOM from 'react-dom'
 import { styled } from 'linaria/react'
-
+import { func } from './func'
+console.log(func(1))
 const Root = styled.div`
   font-family: Arial, sans-serif;
   background-color: salmon;
