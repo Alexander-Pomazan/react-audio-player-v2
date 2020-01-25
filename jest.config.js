@@ -1,3 +1,3 @@
 module.exports = {
-  projects: ['./test/jest.lint.js'],
+  projects: ['./test/jest.eslint.js', './test/jest.stylelint.js'],
 }

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { styled } from 'linaria/react'
 
 const Root = styled.div`
-  font-family: 'Arial';
+  font-family: Arial, sans-serif;
   background-color: salmon;
 `
 
