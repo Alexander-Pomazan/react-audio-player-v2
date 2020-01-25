@@ -6,5 +6,6 @@ module.exports = {
     'jest-watch-select-projects',
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname',
+    'jest-runner-stylelint/watch-fix',
   ],
 }
