@@ -38,7 +38,7 @@ module.exports = {
         sourceType: 'module',
         project: './tsconfig.json',
       },
-      plugins: ['react', '@typescript-eslint'],
+      plugins: ['react', '@typescript-eslint', 'react-hooks'],
     },
     {
       files: ['**/__tests__/**'],
@@ -51,5 +51,8 @@ module.exports = {
       },
     },
   ],
-  rules: {},
+  rules: {
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+  },
 }
