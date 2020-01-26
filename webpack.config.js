@@ -8,6 +8,7 @@ module.exports = {
     stats: 'minimal',
     open: true,
     overlay: true,
+    hot: true,
     publicPath: '/',
   },
   entry: ['react-hot-loader/patch', './src'],
