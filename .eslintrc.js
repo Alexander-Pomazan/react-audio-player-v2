@@ -40,6 +40,9 @@ module.exports = {
         project: './tsconfig.json',
       },
       plugins: ['react', '@typescript-eslint', 'react-hooks'],
+      settings: {
+        'import/resolver': 'webpack',
+      },
     },
     {
       files: ['**/__tests__/**'],
