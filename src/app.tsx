@@ -1,21 +1,15 @@
 import React, { useState, useCallback } from 'react'
 import { hot } from 'react-hot-loader'
-import { styled } from 'linaria/react'
-
-const Root = styled.div`
-  font-family: Arial, sans-serif;
-  background-color: salmon;
-`
 
 const AppRaw: React.FC = () => {
   const [count, setCount] = useState(13)
 
-  const increment = useCallback(() => setCount((prev) => prev + 2), [])
+  const increment = useCallback(() => setCount(count + 2), [count])
 
   return (
-    <Root>
+    <div>
       <button onClick={increment}>{count}</button>
-    </Root>
+    </div>
   )
 }
 
