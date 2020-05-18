@@ -1,4 +1,3 @@
-import 'jest-styled-components'
 import styled from 'styled-components'
 import React from 'react'
 import { render } from '@testing-library/react'
@@ -9,7 +8,7 @@ import tracks from 'src/tracks.json'
 const [track] = tracks as Track[]
 
 const Button = styled.button`
-  color: red;
+  color: blue;
 `
 
 describe('songs-list', () => {
@@ -19,6 +18,10 @@ describe('songs-list', () => {
     const { debug } = render(
       <TracksListItem {...track} onSelect={console.log} isPlaying={false} />,
     )
+
+    const { container } = render(<Button />)
+
+    expect(container).toMatchSnapshot()
 
     debug()
     expect(1).toBe(1)
