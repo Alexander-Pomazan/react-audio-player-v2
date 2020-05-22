@@ -1,16 +1,10 @@
-import React, { useState, useCallback } from 'react'
+import React from 'react'
 import { hot } from 'react-hot-loader'
 
+import { Player } from './player'
+
 const AppRaw: React.FC = () => {
-  const [count, setCount] = useState(13)
-
-  const increment = useCallback(() => setCount(count + 2), [count])
-
-  return (
-    <div>
-      <button onClick={increment}>{count}</button>
-    </div>
-  )
+  return <Player />
 }
 
 export const App = hot(module)(AppRaw)

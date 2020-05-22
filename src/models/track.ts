@@ -1,7 +1,8 @@
+import { Id } from './id'
+
 export interface Track {
-  id: number
+  id: Id
   name: string
   artworkUrl: string
-  duration: number
   source: string
 }

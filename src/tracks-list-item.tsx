@@ -1,6 +1,7 @@
 import React from 'react'
-import { Track } from 'src/models/track'
 import styled from 'styled-components'
+
+import { Track } from 'src/models/track'
 
 interface TracksListItemProps extends Track {
   onSelect: (trackId: Track['id']) => void

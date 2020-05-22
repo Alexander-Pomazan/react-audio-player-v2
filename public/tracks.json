@@ -1,0 +1,106 @@
+[
+  {
+    "id": "269897f9-fb5b-46d0-9933-45104d28123b",
+    "name": "Крепость",
+    "artist": "Дайте танк",
+    "artworkUrl": "/artwork/krepost.jpeg",
+    "duration": 197,
+    "source": "/tracks/dayte-tank-krepost.mp3"
+  },
+  {
+    "id": "9d5196a6-c096-4ca1-a7a7-43192d522245",
+    "name": "Люди",
+    "artist": "Дайте танк",
+    "artworkUrl": "/artwork/ludi.jpeg",
+    "duration": "163",
+    "source": "/tracks/dayte-tank-ludi.mp3"
+  },
+  {
+    "id": "671363b4-7274-4842-bada-e047a7bf90e3",
+    "name": "Шанс",
+    "artist": "Дайте танк",
+    "artworkUrl": "/artwork/shans.jpeg",
+    "duration": 209,
+    "source": "/tracks/dayte-tank-shans.mp3"
+  },
+  {
+    "id": "09e49d13-daa1-44a2-8e05-0f4467db9153",
+    "name": "Buddy",
+    "artist": "Bensound",
+    "artworkUrl": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/1.jpg?alt=media\u0026token=dd506e0d-2a74-47e9-ad92-2af44c2374c1",
+    "duration": 122,
+    "source": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/1.mp3?alt=media\u0026token=485dbea1-03b0-453c-bfa5-2eebba4b7c1f"
+  },
+  {
+    "id": "aaabc5f6-021f-4b7a-abe3-6b17af24165f",
+    "name": "A New Beginning",
+    "artist": "The Clats",
+    "artworkUrl": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/2.jpg?alt=media\u0026token=ff778056-8632-45b0-9cd1-3238b2ba0f42",
+    "duration": 154,
+    "source": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/2.mp3?alt=media\u0026token=d095ba8c-472f-433e-84d5-4612a5f3abd1"
+  },
+  {
+    "id": "c791a76c-3c04-4385-846e-fd9a36d96010",
+    "name": "Happy Rock",
+    "artist": "Nora",
+    "artworkUrl": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/3.jpg?alt=media\u0026token=ab8d335a-c120-41de-80c6-0c00217aef71",
+    "duration": 105,
+    "source": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/3.mp3?alt=media\u0026token=6e823a54-2d5e-457d-a386-c5d78e775ec6"
+  },
+  {
+    "id": "5eeb00d7-2133-4591-aa28-20d6f035964f",
+    "name": "Ukulele",
+    "artist": "Lirae Two",
+    "artworkUrl": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/4.jpg?alt=media\u0026token=f46a5e83-fa49-44bd-ab71-098890ee3f22",
+    "duration": 146,
+    "source": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/4.mp3?alt=media\u0026token=08a390bd-915b-49af-aa1f-ae3099d9ef0e"
+  },
+  {
+    "id": "99c63df1-ca46-4e0b-943b-fc98f885fb5b",
+    "name": "Jazzy Frenchy",
+    "artist": "Claw",
+    "artworkUrl": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/5.jpg?alt=media\u0026token=bbd2f5b5-b752-4106-aa6c-824b85e85ec1",
+    "duration": 104,
+    "source": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/5.mp3?alt=media\u0026token=c0bd0454-8e99-452f-acb5-ad17456e5f71"
+  },
+  {
+    "id": "cb778e59-1308-47f7-99cb-3ee825ebe3d3",
+    "name": "Better Day",
+    "artist": "John Doe",
+    "artworkUrl": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/6.jpg?alt=media\u0026token=91389ee3-8001-4e6c-8688-b63522ff3fb6",
+    "duration": 153,
+    "source": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/6.mp3?alt=media\u0026token=447b6068-acb6-424b-a4c8-d2ef3b6ca67e"
+  },
+  {
+    "id": "17d9c0af-8586-4d16-a0d5-fffbc48f0c16",
+    "name": "Tomorrow",
+    "artist": "Dave Int",
+    "artworkUrl": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/7.jpg?alt=media\u0026token=d333b9d7-d9aa-46f8-bff0-cd37cf84a412",
+    "duration": 294,
+    "source": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/7.mp3?alt=media\u0026token=1626ce91-31c7-40cc-9422-872da0669275"
+  },
+  {
+    "id": "1067ed2b-6c5e-489a-afb5-d83962b27522",
+    "name": "Rumble",
+    "artist": "Darkgrey",
+    "artworkUrl": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/8.jpg?alt=media\u0026token=723a91a4-f506-4045-bad5-acf2a1f62e37",
+    "duration": 154,
+    "source": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/8.mp3?alt=media\u0026token=0927d467-1dd1-4808-8c97-9badb045c9c9"
+  },
+  {
+    "id": "bc77c7a9-decc-4148-90d4-1a2b677e8898",
+    "name": "New Dawn",
+    "artist": "Darkgrey",
+    "artworkUrl": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/9.jpg?alt=media\u0026token=379fdc08-5389-4a13-aa96-b4a733080bb1",
+    "duration": 313,
+    "source": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/9.mp3?alt=media\u0026token=ed160936-de07-4012-96dd-e1331732bdc2"
+  },
+  {
+    "id": "3cd2b170-4f3f-4a94-9c3f-585d5f0f1c48",
+    "name": "Country Boy",
+    "artist": "Dob Bylan",
+    "artworkUrl": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/10.jpg?alt=media\u0026token=23a2a249-573c-49c4-a249-374b46fee258",
+    "duration": 207,
+    "source": "https://firebasestorage.googleapis.com/v0/b/react-audio-player-28dec.appspot.com/o/10.mp3?alt=media\u0026token=bfe7212d-526a-49c0-934f-9aee232bfb39"
+  }
+]

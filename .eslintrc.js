@@ -42,6 +42,41 @@ module.exports = {
       plugins: ['react', '@typescript-eslint', 'react-hooks'],
       settings: {
         'import/resolver': 'webpack',
+        react: {
+          version: 'detect',
+        },
+      },
+      rules: {
+        'react-hooks/rules-of-hooks': 'error',
+        'react-hooks/exhaustive-deps': 'warn',
+        'import/no-default-export': 'error',
+        'import/default': 'off',
+        'no-console': ['warn', { allow: ['warn', 'error'] }],
+        'react/self-closing-comp': [
+          'warn',
+          {
+            component: true,
+            html: true,
+          },
+        ],
+        'import/order': [
+          'error',
+          {
+            'newlines-between': 'always',
+          },
+        ],
+        'react/prop-types': 'off',
+        '@typescript-eslint/explicit-function-return-type': 'off',
+        '@typescript-eslint/no-unused-vars': [
+          'warn',
+          {
+            vars: 'all',
+            args: 'after-used',
+            ignoreRestSiblings: true,
+            argsIgnorePattern: '^_', // allow unused variables that start with underscore
+          },
+        ],
+        '@typescript-eslint/no-explicit-any': 'off', // because we need to move fast right now
       },
     },
     {
@@ -55,8 +90,4 @@ module.exports = {
       },
     },
   ],
-  rules: {
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
-  },
 }

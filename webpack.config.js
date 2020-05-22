@@ -2,6 +2,9 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
+
+const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
   devServer: {
@@ -28,15 +31,7 @@ module.exports = {
       {
         test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
-        use: [
-          { loader: 'babel-loader' },
-          {
-            loader: 'linaria/loader',
-            options: {
-              sourceMap: process.env.NODE_ENV !== 'production',
-            },
-          },
-        ],
+        use: [{ loader: 'babel-loader' }],
       },
       {
         test: /\.css$/,
@@ -44,13 +39,13 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              hmr: process.env.NODE_ENV !== 'production',
+              hmr: !isProd,
             },
           },
           {
             loader: 'css-loader',
             options: {
-              sourceMap: process.env.NODE_ENV !== 'production',
+              sourceMap: !isProd,
             },
           },
         ],
@@ -62,6 +57,16 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin({ async: false }),
     new MiniCssExtractPlugin({
       filename: 'styles-[contenthash].css',
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, './public'),
+          globOptions: {
+            ignore: ['**/index.html'],
+          },
+        },
+      ],
     }),
   ],
 }
