@@ -10,6 +10,7 @@
     "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --watch",
     "lint:css": "jest --config test/jest.stylelint.js",
     "lint": "jest --config test/jest.eslint.js",
+    "start": "npm run dev",
     "dev": "webpack-dev-server --mode=development",
     "build": "webpack --mode=production",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(ts|tsx|js|json|css|html|md)\""
