@@ -1,26 +1,58 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Track } from 'src/models/track'
 import { Img } from 'src/ui'
 
-const Root = styled.button`
+// We only want keyboard navigation styles appear when users uses keyboard navigation
+// https://stackoverflow.com/questions/31402576/enable-focus-only-on-keyboard-use-or-tab-press
+const InnerRoot = styled.div.attrs({ tabIndex: -1 })`
+  height: 100%;
+  width: 100%;
+
   display: flex;
-  font-size: 1rem;
   align-items: center;
+  border-radius: 2px;
+
+  :focus {
+    outline: none;
+  }
+`
+
+const Root = styled.button<{ isSelected: boolean }>`
+  --hover-bg-color: #f2f2f2;
+  --active-box-shadow: 0 0 0px 2px #a3f28d;
+
+  display: block;
+  font-size: 1rem;
+  height: 100%;
   width: 100%;
 
   padding: 0;
-
   background: none;
   border: none;
 
-  min-width: 0;
+  cursor: pointer;
 
-  :hover,
+  ${(p) => {
+    if (p.isSelected)
+      return `
+      background-color: var(--hover-bg-color);
+    `
+  }}
+
+  :hover {
+    background-color: var(--hover-bg-color);
+  }
+
   :focus {
-    background-color: #f4f4f4;
     outline: none;
+  }
+
+  :focus > ${InnerRoot} {
+    position: relative;
+    z-index: 10;
+
+    box-shadow: var(--active-box-shadow);
   }
 `
 
@@ -64,48 +96,36 @@ const Duration = styled.div`
   margin-right: 1.5em;
 `
 
-const ensureTwoDigits = (digit: number | string): string => {
-  const stringifiedDigit = `${digit}`
-
-  if (stringifiedDigit.length >= 2) return stringifiedDigit
-
-  return `0${stringifiedDigit}`
-}
-
-const formatDuration = (duration: number) => {
-  const minutes = ensureTwoDigits(Math.floor(duration / 60))
-  const seconds = ensureTwoDigits(duration % 60)
-
-  return `${minutes}:${seconds}`
-}
-
-interface TracksListItemProps extends Track {
+interface TracksListItemProps {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
-  isPlaying?: boolean
+  isSelected?: boolean
+  artist: string
+  artworkUrl: string
+  trackName: string
+  duration: string
 }
 
 export const TracksListItem: React.FC<TracksListItemProps> = ({
   artist,
   artworkUrl,
-  name,
+  trackName,
   duration,
   onClick,
+  isSelected = false,
 }) => {
   return (
-    <Root tabIndex={0} onClick={onClick}>
-      <ArtworkWrapper>
-        <Artwork src={artworkUrl} />
-      </ArtworkWrapper>
+    <Root tabIndex={0} onClick={onClick} isSelected={isSelected}>
+      <InnerRoot>
+        <ArtworkWrapper>
+          <Artwork src={artworkUrl} />
+        </ArtworkWrapper>
 
-      <NamingsWrapper>
-        <ArtistName>{artist}</ArtistName> - {name}
-      </NamingsWrapper>
+        <NamingsWrapper>
+          <ArtistName>{artist}</ArtistName> - {trackName}
+        </NamingsWrapper>
 
-      <Duration>{formatDuration(duration)}</Duration>
+        <Duration>{duration}</Duration>
+      </InnerRoot>
     </Root>
   )
-}
-
-TracksListItem.defaultProps = {
-  isPlaying: false,
 }

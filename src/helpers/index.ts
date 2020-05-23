@@ -1,1 +1,1 @@
-export { loadImage } from './load-image'
+export { ensureTwoDigits } from './ensure-two-digits'

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
-import { loadImage } from 'src/helpers'
+import { loadImage } from 'src/dom-utils'
 import type { StyledExtendable } from 'src/types'
 
 type RenderType = 'content' | 'presentation'
@@ -32,8 +32,8 @@ const renderTypeToTagName: {
   presentation: 'div',
 } as const
 
-const StyledImage = styled.img<{ src?: string; as: string }>`
-  opacity: ${(p) => (p.src ? 1 : 0)};
+const StyledImage = styled.img<{ src?: string; as: string; isHidden: boolean }>`
+  opacity: ${(p) => (p.isHidden ? 0 : 1)};
   transition: opacity 300ms ease-out;
   ${(p) => {
     if (p.as === 'div') {
@@ -47,18 +47,21 @@ export const Img: React.FC<ImageProps> = ({
   renderType = 'content',
   ...props
 }) => {
-  const [loadedSrc, setLoadedSrc] = useState<string | null>(null)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    if (!src) return setLoadedSrc(null)
+    if (!src) return setIsLoaded(false)
 
-    loadImage(src).then((...args) => {
-      console.log(...args)
-      setLoadedSrc(src)
-    })
+    let isComponentMounted = true
+
+    loadImage(src).then(() => isComponentMounted && setIsLoaded(true))
+
+    return () => {
+      isComponentMounted = false
+    }
   }, [src])
 
   const as = renderTypeToTagName[renderType]
 
-  return <StyledImage as={as} {...props} src={loadedSrc || undefined} />
+  return <StyledImage as={as} {...props} src={src} isHidden={!isLoaded} />
 }
