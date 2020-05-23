@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { TracksListItem } from './tracks-list-item'
+
 import { useLoadTracks } from 'src/hooks'
 import { List } from 'src/ui'
 
@@ -16,9 +18,9 @@ export const Player: React.FC = () => {
 
   return (
     <Root>
-      <List direction='column' gap={40}>
+      <List direction='column'>
         {tracks.map((track) => (
-          <span key={track.id}>{JSON.stringify(track, null, 8)}</span>
+          <TracksListItem key={track.id} {...track} onSelect={console.log} />
         ))}
       </List>
     </Root>
