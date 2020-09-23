@@ -1,6 +1,6 @@
 import { Id } from './id'
 
-export interface Track {
+export type Track = {
   id: Id
   name: string
   artist: string
