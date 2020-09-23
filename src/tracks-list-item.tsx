@@ -19,8 +19,7 @@ const InnerRoot = styled.div.attrs({ tabIndex: -1 })`
 `
 
 const Root = styled.button<{ isSelected: boolean }>`
-  --hover-bg-color: #f2f2f2;
-  --active-box-shadow: 0 0 0px 2px #a3f28d;
+  --active-bg-color: #f2f2f2;
 
   display: block;
   font-size: 1rem;
@@ -36,12 +35,12 @@ const Root = styled.button<{ isSelected: boolean }>`
   ${(p) => {
     if (p.isSelected)
       return `
-      background-color: var(--hover-bg-color);
+      background-color: var(--active-bg-color);
     `
   }}
 
   :hover {
-    background-color: var(--hover-bg-color);
+    background-color: var(--active-bg-color);
   }
 
   :focus {
@@ -52,7 +51,7 @@ const Root = styled.button<{ isSelected: boolean }>`
     position: relative;
     z-index: 10;
 
-    box-shadow: var(--active-box-shadow);
+    box-shadow: 0 0 0px 1px var(--focus-color);
   }
 `
 
