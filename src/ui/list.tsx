@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import type { StyledExtendable } from 'src/types'
 
-interface RootProps {
+type RootProps = {
   gap?: number
   direction?: 'column' | 'row'
 }
@@ -25,16 +25,14 @@ const Root = styled.ul<RootProps>`
   }
 `
 
-interface ListProps extends StyledExtendable, RootProps {
-  children: React.ReactNode[] | React.ReactNode
-}
+type Props = StyledExtendable &
+  RootProps & {
+    children: React.ReactNode[] | React.ReactNode
+  }
 
-export const List: React.FC<ListProps> = ({
-  children,
-  className,
-  gap,
-  direction,
-}) => {
+export const List = (props: Props) => {
+  const { children, className, gap, direction } = props
+
   const wrappedChildren = React.Children.map(children, (child, idx) => {
     const childKey = React.isValidElement(child) ? child.key || idx : idx
 

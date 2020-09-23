@@ -6,24 +6,22 @@ import type { StyledExtendable } from 'src/types'
 
 type RenderType = 'content' | 'presentation'
 
-interface ImagePropsBase extends StyledExtendable {
+type PropsBase = StyledExtendable & {
   renderType?: 'content' | 'presentation'
   src?: string
 }
 
-interface ImagePropsContent
-  extends ImagePropsBase,
-    React.ImgHTMLAttributes<HTMLImageElement> {
-  renderType: 'content'
-}
+type PropsContent = PropsBase &
+  React.ImgHTMLAttributes<HTMLImageElement> & {
+    renderType: 'content'
+  }
 
-interface ImagePropsPresentation
-  extends ImagePropsBase,
-    React.HTMLAttributes<HTMLDivElement> {
-  renderType: 'presentation'
-}
+type PropsPresentation = PropsBase &
+  React.HTMLAttributes<HTMLDivElement> & {
+    renderType: 'presentation'
+  }
 
-type ImageProps = ImagePropsContent | ImagePropsPresentation
+type Props = PropsContent | PropsPresentation
 
 const renderTypeToTagName: {
   [key in RenderType]: 'div' | 'img'
@@ -42,11 +40,9 @@ const StyledImage = styled.img<{ src?: string; as: string; isHidden: boolean }>`
   }}
 `
 
-export const Img: React.FC<ImageProps> = ({
-  src,
-  renderType = 'content',
-  ...props
-}) => {
+export const Img = (props: Props) => {
+  const { src, renderType = 'content', ...imgProps } = props
+
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
@@ -63,5 +59,5 @@ export const Img: React.FC<ImageProps> = ({
 
   const as = renderTypeToTagName[renderType]
 
-  return <StyledImage as={as} {...props} src={src} isHidden={!isLoaded} />
+  return <StyledImage as={as} {...imgProps} src={src} isHidden={!isLoaded} />
 }

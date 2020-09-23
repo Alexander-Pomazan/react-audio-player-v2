@@ -26,7 +26,7 @@ const formatDuration = (duration: Track['duration']) => {
   return `${minutes}:${seconds}`
 }
 
-export const Player: React.FC = () => {
+export const Player = () => {
   const tracks = useLoadTracks('/tracks.json')
 
   const [selectedTrackId, setSelectedTrackId] = useState<null | Track['id']>(

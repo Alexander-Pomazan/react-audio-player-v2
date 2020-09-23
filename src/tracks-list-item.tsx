@@ -95,7 +95,7 @@ const Duration = styled.div`
   margin-right: 1.5em;
 `
 
-interface TracksListItemProps {
+type Props = {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
   isSelected?: boolean
   artist: string
@@ -104,14 +104,16 @@ interface TracksListItemProps {
   duration: string
 }
 
-export const TracksListItem: React.FC<TracksListItemProps> = ({
-  artist,
-  artworkUrl,
-  trackName,
-  duration,
-  onClick,
-  isSelected = false,
-}) => {
+export const TracksListItem = (props: Props) => {
+  const {
+    artist,
+    artworkUrl,
+    trackName,
+    duration,
+    onClick,
+    isSelected = false,
+  } = props
+
   return (
     <Root tabIndex={0} onClick={onClick} isSelected={isSelected}>
       <InnerRoot>
