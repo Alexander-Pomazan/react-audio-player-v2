@@ -18,7 +18,9 @@ const InnerRoot = styled.div.attrs({ tabIndex: -1 })`
   }
 `
 
-const Root = styled.button<{ isSelected: boolean }>`
+const Root = styled.button.attrs({
+  tabIndex: 0,
+})<{ isSelected: boolean }>`
   --active-bg-color: #f2f2f2;
 
   display: block;
@@ -115,7 +117,7 @@ export const TracksListItem = (props: Props) => {
   } = props
 
   return (
-    <Root tabIndex={0} onClick={onClick} isSelected={isSelected}>
+    <Root onClick={onClick} isSelected={isSelected}>
       <InnerRoot>
         <ArtworkWrapper>
           <Artwork src={artworkUrl} />
