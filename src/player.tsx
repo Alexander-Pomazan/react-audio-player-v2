@@ -1,11 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Provider } from 'jotai'
 
 import { TracksList } from './tracks-list'
 import { BottomBar } from './bottom-bar'
-
-import { Track } from 'src/models'
 
 const BottomBarWrapper = styled.div`
   position: fixed;

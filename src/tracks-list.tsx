@@ -17,7 +17,7 @@ const formatDuration = (duration: Track['duration']) => {
 
 const Root = styled.div`
   background-color: #fff;
-  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
 `
 
 export const TracksList = () => {
