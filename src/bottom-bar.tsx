@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 
 import { Controls } from './controls'
 
-import { usePlayerStatus } from 'src/stores'
+import { useCurrentTrackId, useTracks, usePlayerStatus } from 'src/stores'
 
 const Root = styled.div`
   width: 100%;
@@ -23,25 +23,58 @@ const InnerWrapper = styled.div`
   padding-right: 2rem;
 `
 
-export const BottomBar = () => {
+const usePlayerControls = () => {
   const [playerStatus, setPlayerStatus] = usePlayerStatus()
+  const tracks = useTracks()
+  const [currentTrackId, setCurrentTrackId] = useCurrentTrackId()
 
-  const handlePlay = () => {
+  const togglePlay = useCallback(() => {
     if (playerStatus === 'play') {
       setPlayerStatus('pause')
     } else {
       setPlayerStatus('play')
     }
-  }
+  }, [playerStatus, setPlayerStatus])
+
+  const switchNextTrack = useCallback(() => {
+    const currentTrackIndex = tracks.findIndex(
+      (track) => track.id === currentTrackId,
+    )
+
+    const nextTrack = tracks[currentTrackIndex + 1] || tracks[0]
+
+    setCurrentTrackId(nextTrack.id)
+  }, [currentTrackId, setCurrentTrackId, tracks])
+
+  const switchPrevTrack = useCallback(() => {
+    const currentTrackIndex = tracks.findIndex(
+      (track) => track.id === currentTrackId,
+    )
+
+    const nextTrack = tracks[currentTrackIndex - 1] || tracks[tracks.length - 1]
+
+    setCurrentTrackId(nextTrack.id)
+  }, [currentTrackId, setCurrentTrackId, tracks])
+
+  return { playerStatus, togglePlay, switchNextTrack, switchPrevTrack }
+}
+
+export const BottomBar = () => {
+  const {
+    playerStatus,
+    togglePlay,
+    switchNextTrack,
+    switchPrevTrack,
+  } = usePlayerControls()
 
   return (
     <Root>
       <InnerWrapper>
         <Controls
           playerStatus={playerStatus}
-          onNextTrack={() => console.log('next track!')}
-          onPrevTrack={() => console.log('prev track!')}
-          onPlay={handlePlay}
+          onNextTrack={switchNextTrack}
+          onPrevTrack={switchPrevTrack}
+          onPlay={togglePlay}
         />
       </InnerWrapper>
     </Root>
