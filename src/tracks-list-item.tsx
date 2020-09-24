@@ -50,9 +50,6 @@ const Root = styled.button.attrs({
   }
 
   :focus > ${InnerRoot} {
-    position: relative;
-    z-index: 10;
-
     box-shadow: 0 0 0px 1px var(--focus-color);
   }
 `
