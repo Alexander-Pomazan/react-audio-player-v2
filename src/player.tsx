@@ -6,7 +6,7 @@ import { TracksList } from './tracks-list'
 import { BottomBar } from './bottom-bar'
 
 const BottomBarWrapper = styled.div`
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -19,19 +19,28 @@ const TracksListWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   margin-top: 4rem;
-  margin-bottom: 4rem;
+  margin-bottom: 6rem;
+`
+
+const Root = styled.div`
+  height: 100%;
+  width: 100%;
+
+  overflow: auto;
 `
 
 export const Player = () => {
   return (
     <Provider>
-      <BottomBarWrapper>
-        <BottomBar />
-      </BottomBarWrapper>
+      <Root>
+        <BottomBarWrapper>
+          <BottomBar />
+        </BottomBarWrapper>
 
-      <TracksListWrapper>
-        <TracksList />
-      </TracksListWrapper>
+        <TracksListWrapper>
+          <TracksList />
+        </TracksListWrapper>
+      </Root>
     </Provider>
   )
 }
