@@ -3,7 +3,7 @@ import { atom, useAtom } from 'jotai'
 
 import { Track } from 'src/models'
 
-const tracksAtom = atom<Track[]>([])
+export const tracksAtom = atom<Track[]>([])
 
 export const useTracks = () => {
   const [tracks, setTracks] = useAtom(tracksAtom)

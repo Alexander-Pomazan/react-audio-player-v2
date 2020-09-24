@@ -1,9 +1,14 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import { Controls } from './controls'
 
-import { useCurrentTrackId, useTracks, usePlayerStatus } from 'src/stores'
+import {
+  useTogglePlay,
+  useSwitchNextTrack,
+  useSwitchPrevTrack,
+  usePlayerStatus,
+} from 'src/stores'
 
 const Root = styled.div`
   width: 100%;
@@ -23,49 +28,11 @@ const InnerWrapper = styled.div`
   padding-right: 2rem;
 `
 
-const usePlayerControls = () => {
-  const [playerStatus, setPlayerStatus] = usePlayerStatus()
-  const tracks = useTracks()
-  const [currentTrackId, setCurrentTrackId] = useCurrentTrackId()
-
-  const togglePlay = useCallback(() => {
-    if (playerStatus === 'play') {
-      setPlayerStatus('pause')
-    } else {
-      setPlayerStatus('play')
-    }
-  }, [playerStatus, setPlayerStatus])
-
-  const switchNextTrack = useCallback(() => {
-    const currentTrackIndex = tracks.findIndex(
-      (track) => track.id === currentTrackId,
-    )
-
-    const nextTrack = tracks[currentTrackIndex + 1] || tracks[0]
-
-    setCurrentTrackId(nextTrack.id)
-  }, [currentTrackId, setCurrentTrackId, tracks])
-
-  const switchPrevTrack = useCallback(() => {
-    const currentTrackIndex = tracks.findIndex(
-      (track) => track.id === currentTrackId,
-    )
-
-    const nextTrack = tracks[currentTrackIndex - 1] || tracks[tracks.length - 1]
-
-    setCurrentTrackId(nextTrack.id)
-  }, [currentTrackId, setCurrentTrackId, tracks])
-
-  return { playerStatus, togglePlay, switchNextTrack, switchPrevTrack }
-}
-
 export const BottomBar = () => {
-  const {
-    playerStatus,
-    togglePlay,
-    switchNextTrack,
-    switchPrevTrack,
-  } = usePlayerControls()
+  const [playerStatus] = usePlayerStatus()
+  const togglePlay = useTogglePlay()
+  const switchNextTrack = useSwitchNextTrack()
+  const switchPrevTrack = useSwitchPrevTrack()
 
   return (
     <Root>
