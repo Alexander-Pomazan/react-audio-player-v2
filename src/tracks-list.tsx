@@ -6,6 +6,7 @@ import { TracksListItem } from './tracks-list-item'
 import { ensureTwoDigits } from 'src/helpers'
 import { Track } from 'src/models'
 import { List } from 'src/ui'
+import { useTracks, useCurrentTrackId } from 'src/stores'
 
 const formatDuration = (duration: Track['duration']) => {
   const minutes = ensureTwoDigits(Math.floor(duration / 60))
@@ -19,14 +20,9 @@ const Root = styled.div`
   box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1);
 `
 
-type Props = {
-  tracks: Track[]
-  currentTrackId: Track['id'] | null
-  onSelectTrack: (trackId: Track['id']) => void
-}
-
-export const TracksList = (props: Props) => {
-  const { tracks, currentTrackId, onSelectTrack } = props
+export const TracksList = () => {
+  const [currentTrackId, onSelectTrack] = useCurrentTrackId()
+  const tracks = useTracks()
 
   return (
     <Root>

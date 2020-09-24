@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { Provider } from 'jotai'
 
 import { TracksList } from './tracks-list'
 import { BottomBar } from './bottom-bar'
 
 import { Track } from 'src/models'
-import { useLoadTracks } from 'src/hooks'
-
 
 const BottomBarWrapper = styled.div`
   position: fixed;
@@ -25,25 +24,15 @@ const TracksListWrapper = styled.div`
 `
 
 export const Player = () => {
-  const tracks = useLoadTracks('/tracks.json')
-
-  const [selectedTrackId, setSelectedTrackId] = useState<null | Track['id']>(
-    null,
-  )
-
   return (
-    <div>
+    <Provider>
       <TracksListWrapper>
-        <TracksList
-          tracks={tracks}
-          currentTrackId={selectedTrackId}
-          onSelectTrack={setSelectedTrackId}
-        />
+        <TracksList />
       </TracksListWrapper>
 
       <BottomBarWrapper>
         <BottomBar />
       </BottomBarWrapper>
-    </div>
+    </Provider>
   )
 }
