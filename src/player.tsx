@@ -10,6 +10,7 @@ const BottomBarWrapper = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
+  z-index: var(--z-index-bottom-bar);
 `
 
 const TracksListWrapper = styled.div`
@@ -24,13 +25,13 @@ const TracksListWrapper = styled.div`
 export const Player = () => {
   return (
     <Provider>
-      <TracksListWrapper>
-        <TracksList />
-      </TracksListWrapper>
-
       <BottomBarWrapper>
         <BottomBar />
       </BottomBarWrapper>
+
+      <TracksListWrapper>
+        <TracksList />
+      </TracksListWrapper>
     </Provider>
   )
 }

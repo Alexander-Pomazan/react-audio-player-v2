@@ -4,9 +4,18 @@ export const GlobalStyle = createGlobalStyle`
   body, html {
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
+    
+  }
+
+  *:focus {
+    outline: none;
+    box-shadow: 0 0 0px 1px var(--focus-color);
   }
 
   :root {
     --focus-color: #555;
+
+    --z-index-bottom-bar: 100;
   }
 `

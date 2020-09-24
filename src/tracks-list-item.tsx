@@ -15,6 +15,7 @@ const InnerRoot = styled.div.attrs({ tabIndex: -1 })`
 
   :focus {
     outline: none;
+    box-shadow: none;
   }
 `
 
@@ -47,6 +48,8 @@ const Root = styled.button.attrs({
 
   :focus {
     outline: none;
+    z-index: 10;
+    position: relative;
   }
 
   :focus > ${InnerRoot} {
