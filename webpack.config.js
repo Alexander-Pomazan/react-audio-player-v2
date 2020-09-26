@@ -14,7 +14,7 @@ module.exports = {
     hot: true,
     publicPath: '/',
   },
-  entry: ['react-hot-loader/patch', './src'],
+  entry: ['react-hot-loader/patch', 'babel-polyfill', './src'],
   output: {
     path: path.resolve('dist'),
     filename: 'bundle.js',
