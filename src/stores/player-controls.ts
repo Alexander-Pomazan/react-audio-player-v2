@@ -1,63 +1,89 @@
-import { atom, useAtom } from 'jotai'
+import { useCallback } from 'react'
 
-import { tracksAtom } from './tracks'
-import { currentTrackIdAtom } from './current-track-id'
-import { playerStatusAtom } from './player-status'
+import { useTracksQuery } from './tracks'
+import { useCurrentTrackId } from './current-track-id'
+import { usePlayerStatus } from './player-status'
 
-const togglePlayAtom = atom(null, (get, set) => {
-  const playerStatus = get(playerStatusAtom)
+import { PlayerStatus, Track } from 'src/models'
 
-  const newPlayerStatus = (() => {
-    if (playerStatus === 'play') {
-      return 'pause'
-    } else {
-      return 'play'
-    }
-  })()
-
-  set(playerStatusAtom, newPlayerStatus)
-})
+const togglePlayerStatus = (playerStatus: PlayerStatus): PlayerStatus => {
+  if (playerStatus === 'play') {
+    return 'pause'
+  } else {
+    return 'play'
+  }
+}
 
 export const useTogglePlay = () => {
-  const [, togglePlay] = useAtom(togglePlayAtom)
+  const [, setPlayerStatus] = usePlayerStatus()
+
+  const togglePlay = useCallback(() => {
+    setPlayerStatus((playerStatus) => togglePlayerStatus(playerStatus))
+  }, [setPlayerStatus])
 
   return togglePlay
 }
 
-const switchNextTrackAtom = atom(null, (get, set) => {
-  const tracks = get(tracksAtom)
-  const currentTrackId = get(currentTrackIdAtom)
+const switchPlaylistPosition = (
+  currentTrackId: Track['id'] | null,
+  tracks: Track[],
+  displacement: number,
+) => {
+  if (tracks.length === 0) {
+    return null
+  }
+
+  const fallback = displacement > 0 ? tracks[0] : tracks[tracks.length - 1]
+
+  if (currentTrackId === null) {
+    return fallback.id
+  }
 
   const currentTrackIndex = tracks.findIndex(
     (track) => track.id === currentTrackId,
   )
 
-  const nextTrack = tracks[currentTrackIndex + 1] || tracks[0]
+  const trackToSwitchTo = tracks[currentTrackIndex - displacement] || fallback
 
-  set(currentTrackIdAtom, nextTrack.id)
-})
+  return trackToSwitchTo.id
+}
+
+const getNextTrackId = (
+  currentTrackId: Track['id'] | null,
+  tracks: Track[],
+) => {
+  return switchPlaylistPosition(currentTrackId, tracks, 1)
+}
 
 export const useSwitchNextTrack = () => {
-  const [, switchNextTrack] = useAtom(switchNextTrackAtom)
+  const { data: tracks } = useTracksQuery()
+  const [, setCurrentTrackId] = useCurrentTrackId()
+
+  const switchNextTrack = useCallback(() => {
+    return setCurrentTrackId((currentTrackId) =>
+      getNextTrackId(currentTrackId, tracks),
+    )
+  }, [setCurrentTrackId, tracks])
 
   return switchNextTrack
 }
 
-const switchPrevTrackAtom = atom(null, (get, set) => {
-  const tracks = get(tracksAtom)
-  const currentTrackId = get(currentTrackIdAtom)
-
-  const currentTrackIndex = tracks.findIndex(
-    (track) => track.id === currentTrackId,
-  )
-
-  const prevTrack = tracks[currentTrackIndex - 1] || tracks[tracks.length - 1]
-
-  set(currentTrackIdAtom, prevTrack.id)
-})
+const getPrevTrackId = (
+  currentTrackId: Track['id'] | null,
+  tracks: Track[],
+) => {
+  return switchPlaylistPosition(currentTrackId, tracks, -1)
+}
 
 export const useSwitchPrevTrack = () => {
-  const [, switchPrevTrack] = useAtom(switchPrevTrackAtom)
+  const { data: tracks } = useTracksQuery()
+  const [, setCurrentTrackId] = useCurrentTrackId()
 
-  return switchPrevTrack
+  const switchNextTrack = useCallback(() => {
+    return setCurrentTrackId((currentTrackId) =>
+      getPrevTrackId(currentTrackId, tracks),
+    )
+  }, [setCurrentTrackId, tracks])
+
+  return switchNextTrack
 }

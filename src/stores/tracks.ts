@@ -1,20 +1,20 @@
-import { useEffect } from 'react'
-import { atom, useAtom } from 'jotai'
+import { atom } from 'jotai'
+import { useQuery } from 'react-query'
 
 import { Track } from 'src/models'
 
+const getTracks = async (): Promise<Track[]> => {
+  const response = await fetch('/tracks.json')
+
+  return await response.json()
+}
+
 export const tracksAtom = atom<Track[]>([])
 
-export const useTracks = () => {
-  const [tracks, setTracks] = useAtom(tracksAtom)
+export const useTracksQuery = () => {
+  const { data = [], ...rest } = useQuery('tracks', getTracks, {
+    initialData: [],
+  })
 
-  useEffect(() => {
-    if (tracks.length === 0) {
-      fetch('/tracks.json')
-        .then((res) => res.json())
-        .then((tracks: Track[]) => setTracks(tracks))
-    }
-  }, [])
-
-  return tracks
+  return { data, ...rest }
 }
