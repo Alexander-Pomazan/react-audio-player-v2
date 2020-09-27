@@ -8,6 +8,7 @@ import { Next, Pause, Play, Prev } from 'src/icons'
 
 const Root = styled.nav`
   display: flex;
+  height: 100%;
 `
 
 const ControlsList = styled.ul`
