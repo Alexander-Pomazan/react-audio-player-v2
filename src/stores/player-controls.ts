@@ -43,7 +43,7 @@ const switchPlaylistPosition = (
     (track) => track.id === currentTrackId,
   )
 
-  const trackToSwitchTo = tracks[currentTrackIndex - displacement] || fallback
+  const trackToSwitchTo = tracks[currentTrackIndex + displacement] || fallback
 
   return trackToSwitchTo.id
 }

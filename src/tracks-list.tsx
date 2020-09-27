@@ -6,7 +6,7 @@ import { TracksListItem } from './tracks-list-item'
 import { ensureTwoDigits } from 'src/helpers'
 import { Track } from 'src/models'
 import { List } from 'src/ui'
-import { useCurrentTrackId, useTracksQuery } from 'src/stores'
+import { useCurrentTrackId, useSelectTrack, useTracksQuery } from 'src/stores'
 
 const formatDuration = (duration: Track['duration']) => {
   const minutes = ensureTwoDigits(Math.floor(duration / 60))
@@ -21,23 +21,29 @@ const Root = styled.div`
 `
 
 export const TracksList = () => {
-  const [currentTrackId, onSelectTrack] = useCurrentTrackId()
   const { data: tracks } = useTracksQuery()
+  const [currentTrackId] = useCurrentTrackId()
+
+  const selectTrack = useSelectTrack()
 
   return (
     <Root>
       <List direction='column'>
-        {tracks.map((track) => (
-          <TracksListItem
-            key={track.id}
-            trackName={track.name}
-            duration={formatDuration(track.duration)}
-            artist={track.artist}
-            artworkUrl={track.artworkUrl}
-            isSelected={track.id === currentTrackId}
-            onClick={() => onSelectTrack(track.id)}
-          />
-        ))}
+        {tracks.map((track) => {
+          return (
+            <TracksListItem
+              key={track.id}
+              trackName={track.name}
+              duration={formatDuration(track.duration)}
+              artist={track.artist}
+              artworkUrl={track.artworkUrl}
+              isSelected={track.id === currentTrackId}
+              onClick={() => {
+                selectTrack(track.id)
+              }}
+            />
+          )
+        })}
       </List>
     </Root>
   )

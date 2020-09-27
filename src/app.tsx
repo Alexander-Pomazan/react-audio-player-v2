@@ -9,7 +9,6 @@ const Root = styled.div`
   width: 100vw;
   display: flex;
   flex-direction: column;
-  max-width: 1200px;
 
   margin-left: auto;
   margin-right: auto;
