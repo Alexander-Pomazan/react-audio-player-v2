@@ -11,8 +11,6 @@ type Arg = {
   onProgress: (progress: number, event: Event) => void
 }
 
-const MANUAL_SEEK_TRIGGER_INTERVAL = 1
-
 export const createUseAudio = () => {
   const audioElement = new Audio()
 
@@ -43,13 +41,13 @@ export const createUseAudio = () => {
       if (playerStatus === 'pause') {
         audioElement.pause()
       }
-    }, [playerStatus])
+    }, [playerStatus, src])
 
     useEffect(() => {
       // TODO: bad solution as we have two sources of truth that are not in sync
-      // if (audioElement.currentTime - progress > MANUAL_SEEK_TRIGGER_INTERVAL) {
-      // audioElement.currentTime = progress
-      // }
+      if (Math.round(audioElement.currentTime) !== Math.round(progress)) {
+        audioElement.currentTime = progress
+      }
     }, [progress])
 
     useEffect(() => {
