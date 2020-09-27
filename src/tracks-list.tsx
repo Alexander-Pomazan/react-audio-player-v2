@@ -27,7 +27,7 @@ export const TracksList = () => {
   return (
     <Root>
       <List direction='column'>
-        {(tracks || []).map((track) => (
+        {tracks.map((track) => (
           <TracksListItem
             key={track.id}
             trackName={track.name}

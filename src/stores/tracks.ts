@@ -14,6 +14,7 @@ export const tracksAtom = atom<Track[]>([])
 export const useTracksQuery = () => {
   const { data = [], ...rest } = useQuery('tracks', getTracks, {
     initialData: [],
+    initialStale: true,
   })
 
   return { data, ...rest }
