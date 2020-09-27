@@ -5,20 +5,24 @@ const Root = styled.div.attrs({ role: 'presentation' })`
   width: 100%;
   height: 1rem;
   position: relative;
-
+  overflow: hidden;
   background-color: #ddd;
 `
 
 const Progress = styled.div`
-  --progress-width: 0%;
+  --progress: 0%;
 
   position: absolute;
-  left: 0;
+  right: 100%;
   top: 0;
   height: 100%;
-  width: var(--progress-width);
+  width: 100%;
+
+  transition: transform 0.2s linear;
 
   background-color: #aaa;
+
+  transform: translateX(var(--progress));
 `
 
 type Props = {
@@ -30,7 +34,7 @@ export const ProgressBar = (props: Props) => {
 
   return (
     <Root>
-      <Progress style={{ '--progress-width': `${progress * 100}%` } as any} />
+      <Progress style={{ '--progress': `${progress * 100}%` } as any} />
     </Root>
   )
 }
