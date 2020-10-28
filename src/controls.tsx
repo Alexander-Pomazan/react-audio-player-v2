@@ -32,7 +32,7 @@ type Props = {
   onPrevTrack: () => void
 }
 
-export const Controls: React.FC<Props> = (props) => {
+export const Controls = (props: Props) => {
   const { playerStatus, onPlay, onNextTrack, onPrevTrack } = props
 
   const playButtonAriaLabel =

@@ -3,6 +3,7 @@ import { useCallback } from 'react'
 import { useTracksQuery } from './tracks'
 import { useCurrentTrackId } from './current-track-id'
 import { usePlayerStatus } from './player-status'
+import { useSelectTrack } from './use-select-track'
 
 import { PlayerStatus, Track } from 'src/models'
 
@@ -57,13 +58,13 @@ const getNextTrackId = (
 
 export const useSwitchNextTrack = () => {
   const { data: tracks } = useTracksQuery()
-  const [, setCurrentTrackId] = useCurrentTrackId()
+  const [currentTrackId] = useCurrentTrackId()
+  const onTrackSelect = useSelectTrack()
 
   const switchNextTrack = useCallback(() => {
-    return setCurrentTrackId((currentTrackId) =>
-      getNextTrackId(currentTrackId, tracks),
-    )
-  }, [setCurrentTrackId, tracks])
+    const nextTrackId = getNextTrackId(currentTrackId, tracks)
+    return onTrackSelect(nextTrackId)
+  }, [currentTrackId, onTrackSelect, tracks])
 
   return switchNextTrack
 }
@@ -77,13 +78,13 @@ const getPrevTrackId = (
 
 export const useSwitchPrevTrack = () => {
   const { data: tracks } = useTracksQuery()
-  const [, setCurrentTrackId] = useCurrentTrackId()
+  const [currentTrackId] = useCurrentTrackId()
+  const onTrackSelect = useSelectTrack()
 
   const switchNextTrack = useCallback(() => {
-    return setCurrentTrackId((currentTrackId) =>
-      getPrevTrackId(currentTrackId, tracks),
-    )
-  }, [setCurrentTrackId, tracks])
+    const prevTrackId = getPrevTrackId(currentTrackId, tracks)
+    return onTrackSelect(prevTrackId)
+  }, [currentTrackId, onTrackSelect, tracks])
 
   return switchNextTrack
 }

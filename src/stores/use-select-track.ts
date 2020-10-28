@@ -14,16 +14,25 @@ export const useSelectTrack = () => {
   const togglePlay = useTogglePlay()
 
   const onTrackSelect = useCallback(
-    (trackId: Track['id']) => {
+    (trackId: Track['id'] | null) => {
       if (trackId === currentTrackId) {
-        togglePlay()
-      } else {
-        setCurrentProgress(0)
-        onSelectTrackId(trackId)
+        return togglePlay()
+      }
+
+      setCurrentProgress(0)
+      onSelectTrackId(trackId)
+
+      if (trackId !== null) {
         setPlayerStatus('play')
       }
     },
-    [currentTrackId, onSelectTrackId, setPlayerStatus, togglePlay],
+    [
+      currentTrackId,
+      onSelectTrackId,
+      setCurrentProgress,
+      setPlayerStatus,
+      togglePlay,
+    ],
   )
 
   return onTrackSelect

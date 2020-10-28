@@ -1,10 +1,27 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import { ProgressBarRoot } from './progress-bar-root'
+import { SeekableWrapper } from './seekable-wrapper'
 
 import { useSyncedState } from 'src/hooks'
 import { Progress } from 'src/models'
+
+const SeekableRoot = styled(SeekableWrapper).attrs({ role: 'presentation' })<{
+  isDisabled: boolean
+}>`
+  width: 100%;
+  height: 1rem;
+  position: relative;
+  overflow: hidden;
+  background-color: #ddd;
+  ${(p) =>
+    p.isDisabled &&
+    `
+    pointer-events: none;
+  `}
+
+  cursor: pointer;
+`
 
 const ProgressFill = styled.div<{
   disableTransition: boolean
@@ -26,12 +43,13 @@ const ProgressFill = styled.div<{
 `
 
 type Props = {
+  isDisabled?: boolean
   progress: Progress
   onChangeProgress: (progress: Progress) => void
 }
 
 export const ProgressBar = (props: Props) => {
-  const { progress, onChangeProgress } = props
+  const { progress, onChangeProgress, isDisabled = false } = props
 
   const [isSeekingManually, setIsSeekingManually] = useState(false)
   const [localProgress, setLocalProgress] = useSyncedState(progress, {
@@ -53,7 +71,8 @@ export const ProgressBar = (props: Props) => {
   }
 
   return (
-    <ProgressBarRoot
+    <SeekableRoot
+      isDisabled={isDisabled}
       onSeekStart={onSeekStart}
       onSeek={onSeek}
       onSeekEnd={onSeekEnd}
@@ -62,6 +81,6 @@ export const ProgressBar = (props: Props) => {
         disableTransition={isSeekingManually}
         style={{ '--progress': `${localProgress * 100}%` } as any}
       />
-    </ProgressBarRoot>
+    </SeekableRoot>
   )
 }

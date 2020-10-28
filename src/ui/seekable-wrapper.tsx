@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
-import styled from 'styled-components'
 import curry from 'lodash/curry'
+import clamp from 'lodash/clamp'
 
 import { Progress } from 'src/models'
 import { useValueRef } from 'src/hooks'
@@ -10,30 +10,26 @@ const getProgress = curry((targetElement: Element, eventClientX: number) => {
 
   const progress = (eventClientX - left) / width
 
-  return progress
+  return clamp(progress, 0, 1)
 })
-
-const Root = styled.div.attrs({ role: 'presentation' })`
-  width: 100%;
-  height: 1rem;
-  position: relative;
-  overflow: hidden;
-  background-color: #ddd;
-
-  cursor: pointer;
-`
 
 type SeekHandler = (progress: Progress) => void
 
-type Props = {
+type Props = React.ComponentProps<'div'> & {
   onSeekStart?: SeekHandler
   onSeek?: SeekHandler
   onSeekEnd?: SeekHandler
-  children: React.ReactNode
 }
 
-export const ProgressBarRoot = (props: Props) => {
-  const { onSeek, onSeekStart, onSeekEnd, children } = props
+export const SeekableWrapper = (props: Props) => {
+  const {
+    onSeek,
+    onSeekStart,
+    onSeekEnd,
+    children,
+    onPointerDown,
+    ...attributes
+  } = props
 
   const seekHandlersRef = useValueRef({
     onSeek,
@@ -41,8 +37,14 @@ export const ProgressBarRoot = (props: Props) => {
     onSeekEnd,
   })
 
-  const handlePointerDown: React.PointerEventHandler = useCallback(
+  const handlePointerDown: React.PointerEventHandler<HTMLDivElement> = useCallback(
     (event) => {
+      onPointerDown?.(event)
+
+      if (event.isDefaultPrevented()) {
+        return
+      }
+
       const element = event.currentTarget
       const calculateProgress = getProgress(element)
 
@@ -51,6 +53,7 @@ export const ProgressBarRoot = (props: Props) => {
       seekHandlersRef.current.onSeekStart?.(progress)
 
       const handlePointerMove = (event: PointerEvent) => {
+        event.preventDefault()
         const progress = calculateProgress(event.clientX)
 
         seekHandlersRef.current.onSeek?.(progress)
@@ -69,8 +72,12 @@ export const ProgressBarRoot = (props: Props) => {
 
       window.addEventListener('pointerup', handlePointerUp, { once: true })
     },
-    [seekHandlersRef],
+    [onPointerDown, seekHandlersRef],
   )
 
-  return <Root onPointerDown={handlePointerDown}>{children}</Root>
+  return (
+    <div onPointerDown={handlePointerDown} {...attributes}>
+      {children}
+    </div>
+  )
 }
