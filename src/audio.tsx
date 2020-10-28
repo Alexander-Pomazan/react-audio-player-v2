@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { PlayerStatus } from './models'
 
@@ -11,57 +11,56 @@ type Arg = {
   onProgress: (progress: number, event: Event) => void
 }
 
-export const createUseAudio = () => {
-  const audioElement = new Audio()
+export const useAudio = (arg: Arg) => {
+  const { src, playerStatus, progress, onProgress } = arg
 
-  const subscribeTo = (
-    ...args: Parameters<typeof audioElement.addEventListener>
-  ): Unsubscribe => {
-    audioElement.addEventListener(...args)
+  const [audioElement] = useState(() => new Audio())
 
-    return () => {
-      audioElement.removeEventListener(...args)
+  const subscribeTo = useCallback(
+    (
+      ...args: Parameters<typeof audioElement.addEventListener>
+    ): Unsubscribe => {
+      audioElement.addEventListener(...args)
+
+      return () => {
+        audioElement.removeEventListener(...args)
+      }
+    },
+    [audioElement],
+  )
+
+  useEffect(() => {
+    if (src) {
+      audioElement.src = src
     }
-  }
+  }, [src, audioElement])
 
-  const useAudio = (arg: Arg) => {
-    const { src, playerStatus, progress, onProgress } = arg
+  useEffect(() => {
+    if (playerStatus === 'play') {
+      audioElement.play()
+    }
 
-    useEffect(() => {
-      if (src) {
-        audioElement.src = src
-      }
-    }, [src])
+    if (playerStatus === 'pause') {
+      audioElement.pause()
+    }
+  }, [audioElement, playerStatus, src])
 
-    useEffect(() => {
-      if (playerStatus === 'play') {
-        audioElement.play()
-      }
+  useEffect(() => {
+    // TODO: bad solution as we have two sources of truth that are not in sync
+    if (Math.round(audioElement.currentTime) !== Math.round(progress)) {
+      audioElement.currentTime = progress
+    }
+  }, [audioElement, progress])
 
-      if (playerStatus === 'pause') {
-        audioElement.pause()
-      }
-    }, [playerStatus, src])
+  useEffect(() => {
+    if (!onProgress) {
+      return
+    }
 
-    useEffect(() => {
-      // TODO: bad solution as we have two sources of truth that are not in sync
-      if (Math.round(audioElement.currentTime) !== Math.round(progress)) {
-        audioElement.currentTime = progress
-      }
-    }, [progress])
+    const unsubscribe = subscribeTo('timeupdate', (event: Event) => {
+      onProgress(audioElement.currentTime, event)
+    })
 
-    useEffect(() => {
-      if (!onProgress) {
-        return
-      }
-
-      const unsubscribe = subscribeTo('timeupdate', (event: Event) => {
-        onProgress(audioElement.currentTime, event)
-      })
-
-      return unsubscribe
-    }, [onProgress])
-  }
-
-  return useAudio
+    return unsubscribe
+  }, [audioElement, onProgress, subscribeTo])
 }

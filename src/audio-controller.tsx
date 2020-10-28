@@ -1,14 +1,12 @@
 import { useCallback } from 'react'
 
-import { createUseAudio } from './audio'
+import { useAudio } from './audio'
 
 import {
   useCurrentTrack,
   usePlayerStatus,
   useCurrentProgress,
 } from 'src/stores'
-
-const useAudio = createUseAudio()
 
 export const AudioController = () => {
   const currentTrack = useCurrentTrack()

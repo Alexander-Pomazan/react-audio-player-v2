@@ -33,7 +33,7 @@ export const ProgressBar = (props: Props) => {
   const { progress } = props
 
   return (
-    <Root>
+    <Root onClick={console.log}>
       <Progress style={{ '--progress': `${progress * 100}%` } as any} />
     </Root>
   )
