@@ -57,11 +57,13 @@ const getNextTrackId = (
 
 export const useSwitchNextTrack = () => {
   const { data: tracks } = useTracksQuery()
-  const [currentTrackId, setCurrentTrackId] = useCurrentTrackId()
+  const [, setCurrentTrackId] = useCurrentTrackId()
 
   const switchNextTrack = useCallback(() => {
-    return setCurrentTrackId(getNextTrackId(currentTrackId, tracks))
-  }, [currentTrackId, setCurrentTrackId, tracks])
+    return setCurrentTrackId((currentTrackId) =>
+      getNextTrackId(currentTrackId, tracks),
+    )
+  }, [setCurrentTrackId, tracks])
 
   return switchNextTrack
 }
@@ -75,11 +77,13 @@ const getPrevTrackId = (
 
 export const useSwitchPrevTrack = () => {
   const { data: tracks } = useTracksQuery()
-  const [currentTrackId, setCurrentTrackId] = useCurrentTrackId()
+  const [, setCurrentTrackId] = useCurrentTrackId()
 
   const switchNextTrack = useCallback(() => {
-    return setCurrentTrackId(getPrevTrackId(currentTrackId, tracks))
-  }, [currentTrackId, setCurrentTrackId, tracks])
+    return setCurrentTrackId((currentTrackId) =>
+      getPrevTrackId(currentTrackId, tracks),
+    )
+  }, [setCurrentTrackId, tracks])
 
   return switchNextTrack
 }
