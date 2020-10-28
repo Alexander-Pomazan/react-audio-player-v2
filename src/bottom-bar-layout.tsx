@@ -7,13 +7,15 @@ const Root = styled.div`
   height: 4rem;
   background-color: white;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.15);
+
+  display: flex;
+  flex-direction: column;
 `
 
 const InnerWrapper = styled.div`
   max-width: 1200px;
   width: 100%;
-  padding-left: 2rem;
-  padding-right: 2rem;
+
   height: 100%;
   margin-left: auto;
   margin-right: auto;
@@ -24,6 +26,9 @@ const InnerWrapper = styled.div`
 
 const ControlsWrapper = styled.div`
   flex-grow: 1;
+
+  padding-left: 2rem;
+  padding-right: 2rem;
 `
 
 type Props = {
