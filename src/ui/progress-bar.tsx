@@ -1,17 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
+import { ProgressBarRoot } from './progress-bar-root'
+
+import { useSyncedState } from 'src/hooks'
 import { Progress } from 'src/models'
 
-const Root = styled.div.attrs({ role: 'presentation' })`
-  width: 100%;
-  height: 1rem;
-  position: relative;
-  overflow: hidden;
-  background-color: #ddd;
-`
-
-const ProgressFill = styled.div`
+const ProgressFill = styled.div<{
+  disableTransition: boolean
+}>`
   --progress: 0%;
 
   position: absolute;
@@ -20,7 +17,8 @@ const ProgressFill = styled.div`
   height: 100%;
   width: 100%;
 
-  transition: transform 0.2s linear;
+  transition: ${(p) =>
+    p.disableTransition ? 'none' : 'transform 0.2s linear'};
 
   background-color: #aaa;
 
@@ -35,19 +33,35 @@ type Props = {
 export const ProgressBar = (props: Props) => {
   const { progress, onChangeProgress } = props
 
+  const [isSeekingManually, setIsSeekingManually] = useState(false)
+  const [localProgress, setLocalProgress] = useSyncedState(progress, {
+    disableSync: isSeekingManually,
+  })
+
+  const onSeekStart = (newProgress: Progress) => {
+    setIsSeekingManually(true)
+    setLocalProgress(newProgress)
+  }
+
+  const onSeek = (newProgress: Progress) => {
+    setLocalProgress(newProgress)
+  }
+
+  const onSeekEnd = (newProgress: Progress) => {
+    setIsSeekingManually(false)
+    onChangeProgress(newProgress)
+  }
+
   return (
-    <Root
-      onClick={(event) => {
-        const element = event.currentTarget
-
-        const { left, width } = element.getBoundingClientRect()
-
-        const newProgress = (event.clientX - left) / width
-
-        onChangeProgress(newProgress)
-      }}
+    <ProgressBarRoot
+      onSeekStart={onSeekStart}
+      onSeek={onSeek}
+      onSeekEnd={onSeekEnd}
     >
-      <ProgressFill style={{ '--progress': `${progress * 100}%` } as any} />
-    </Root>
+      <ProgressFill
+        disableTransition={isSeekingManually}
+        style={{ '--progress': `${localProgress * 100}%` } as any}
+      />
+    </ProgressBarRoot>
   )
 }
