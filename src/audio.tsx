@@ -9,10 +9,11 @@ type Arg = {
   playerStatus: PlayerStatus
   progress: number
   onProgress: (progress: number, event: Event) => void
+  trackDuration?: number
 }
 
 export const useAudio = (arg: Arg) => {
-  const { src, playerStatus, progress, onProgress } = arg
+  const { src, playerStatus, progress, onProgress, trackDuration = 0 } = arg
 
   const [audioElement] = useState(() => new Audio())
 
@@ -46,11 +47,13 @@ export const useAudio = (arg: Arg) => {
   }, [audioElement, playerStatus, src])
 
   useEffect(() => {
+    const progressTime = progress * trackDuration ?? 0
+
     // TODO: bad solution as we have two sources of truth that are not in sync
-    if (Math.round(audioElement.currentTime) !== Math.round(progress)) {
-      audioElement.currentTime = progress
+    if (Math.round(audioElement.currentTime) !== Math.round(progressTime)) {
+      audioElement.currentTime = progressTime
     }
-  }, [audioElement, progress])
+  }, [audioElement, progress, trackDuration])
 
   useEffect(() => {
     if (!onProgress) {
@@ -58,9 +61,9 @@ export const useAudio = (arg: Arg) => {
     }
 
     const unsubscribe = subscribeTo('timeupdate', (event: Event) => {
-      onProgress(audioElement.currentTime, event)
+      onProgress(audioElement.currentTime / trackDuration, event)
     })
 
     return unsubscribe
-  }, [audioElement, onProgress, subscribeTo])
+  }, [audioElement, onProgress, subscribeTo, trackDuration])
 }

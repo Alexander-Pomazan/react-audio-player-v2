@@ -1,5 +1,13 @@
 import { atom, useAtom } from 'jotai'
 
-const currentProgressAtom = atom(0)
+import { Progress, progressInvariant } from 'src/models'
 
-export const useCurrentProgress = () => useAtom(currentProgressAtom)
+export const currentProgressAtom = atom<Progress>(0)
+
+export const useCurrentProgress = () => {
+  const atomValue = useAtom(currentProgressAtom)
+
+  progressInvariant(atomValue[0])
+
+  return atomValue
+}

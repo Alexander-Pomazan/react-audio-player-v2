@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 
 import { useAudio } from './audio'
+import { Progress } from './models'
 
 import {
   useCurrentTrack,
@@ -14,7 +15,7 @@ export const AudioController = () => {
   const [currentProgress, setCurrentProgress] = useCurrentProgress()
 
   const handleProgress = useCallback(
-    (progress: number) => {
+    (progress: Progress) => {
       setCurrentProgress(progress)
     },
     [setCurrentProgress],
@@ -22,6 +23,7 @@ export const AudioController = () => {
 
   useAudio({
     src: currentTrack?.source,
+    trackDuration: currentTrack?.duration,
     playerStatus,
     progress: currentProgress,
     onProgress: handleProgress,

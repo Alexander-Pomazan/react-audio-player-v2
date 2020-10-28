@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { Progress } from 'src/models'
+
 const Root = styled.div.attrs({ role: 'presentation' })`
   width: 100%;
   height: 1rem;
@@ -9,7 +11,7 @@ const Root = styled.div.attrs({ role: 'presentation' })`
   background-color: #ddd;
 `
 
-const Progress = styled.div`
+const ProgressFill = styled.div`
   --progress: 0%;
 
   position: absolute;
@@ -26,15 +28,26 @@ const Progress = styled.div`
 `
 
 type Props = {
-  progress: number
+  progress: Progress
+  onChangeProgress: (progress: Progress) => void
 }
 
 export const ProgressBar = (props: Props) => {
-  const { progress } = props
+  const { progress, onChangeProgress } = props
 
   return (
-    <Root onClick={console.log}>
-      <Progress style={{ '--progress': `${progress * 100}%` } as any} />
+    <Root
+      onClick={(event) => {
+        const element = event.currentTarget
+
+        const { left, width } = element.getBoundingClientRect()
+
+        const newProgress = (event.clientX - left) / width
+
+        onChangeProgress(newProgress)
+      }}
+    >
+      <ProgressFill style={{ '--progress': `${progress * 100}%` } as any} />
     </Root>
   )
 }
