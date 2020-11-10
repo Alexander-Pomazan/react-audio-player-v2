@@ -2,6 +2,10 @@ import { atom, useAtom } from 'jotai'
 
 import { Track } from 'src/models'
 
-export const currentTrackIdAtom = atom<null | Track['id']>(null)
+type TrackIdValue = null | Track['id']
 
-export const useCurrentTrackId = () => useAtom(currentTrackIdAtom)
+export const currentTrackIdAtom = atom<TrackIdValue>(null)
+
+export const useCurrentTrackId = () => {
+  return useAtom(currentTrackIdAtom)
+}

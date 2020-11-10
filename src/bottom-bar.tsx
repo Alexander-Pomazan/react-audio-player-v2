@@ -9,6 +9,8 @@ import {
   useSwitchNextTrack,
   useSwitchPrevTrack,
   usePlayerStatus,
+  useCurrentProgress,
+  useCurrentTrack,
 } from 'src/stores'
 
 export const BottomBar = () => {
@@ -17,9 +19,19 @@ export const BottomBar = () => {
   const switchNextTrack = useSwitchNextTrack()
   const switchPrevTrack = useSwitchPrevTrack()
 
+  const currentTrack = useCurrentTrack()
+
+  const [currentProgress, setCurrentProgress] = useCurrentProgress()
+
   return (
     <BottomBarLayout
-      progressBar={<ProgressBar progress={0.5} />}
+      progressBar={
+        <ProgressBar
+          progress={currentProgress}
+          onChangeProgress={(progress) => setCurrentProgress(progress)}
+          isDisabled={!currentTrack}
+        />
+      }
       controls={
         <Controls
           playerStatus={playerStatus}
