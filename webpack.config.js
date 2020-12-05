@@ -1,10 +1,8 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-
-const isProd = process.env.NODE_ENV === 'production'
+const { ESBuildPlugin } = require('esbuild-loader')
 
 module.exports = {
   devServer: {
@@ -14,7 +12,7 @@ module.exports = {
     hot: true,
     publicPath: '/',
   },
-  entry: ['react-hot-loader/patch', 'babel-polyfill', './src'],
+  entry: ['react-hot-loader/patch', './src'],
   output: {
     path: path.resolve('dist'),
     filename: 'bundle.js',
@@ -31,33 +29,19 @@ module.exports = {
       {
         test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
-        use: [{ loader: 'babel-loader' }],
-      },
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              hmr: !isProd,
-            },
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: !isProd,
-            },
-          },
-        ],
+        loader: require.resolve('esbuild-loader'),
+        options: {
+          loader: 'tsx',
+          target: 'es2015',
+        },
       },
     ],
   },
   plugins: [
+    new ESBuildPlugin(),
     new HtmlWebpackPlugin({ template: path.resolve('public/index.html') }),
     new ForkTsCheckerWebpackPlugin({ async: false }),
-    new MiniCssExtractPlugin({
-      filename: 'styles-[contenthash].css',
-    }),
+
     new CopyPlugin({
       patterns: [
         {

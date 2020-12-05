@@ -35,15 +35,15 @@ const Root = styled.button.attrs({
 
   cursor: pointer;
 
-  ${(p) => {
+  ${/* sc-block */ (p) => {
     if (p.isSelected)
       return `
       background-color: var(--active-bg-color);
     `
   }}
 
-  :hover {
-    background-color: var(--active-bg-color);
+  :focus > ${InnerRoot /* sc-sel */} {
+    box-shadow: 0 0 0px 1px var(--focus-color);
   }
 
   :focus {
@@ -52,8 +52,8 @@ const Root = styled.button.attrs({
     position: relative;
   }
 
-  :focus > ${InnerRoot} {
-    box-shadow: 0 0 0px 1px var(--focus-color);
+  :hover {
+    background-color: var(--active-bg-color);
   }
 `
 

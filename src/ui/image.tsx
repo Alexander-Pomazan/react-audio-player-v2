@@ -33,6 +33,7 @@ const renderTypeToTagName: {
 const StyledImage = styled.img<{ src?: string; as: string; isHidden: boolean }>`
   opacity: ${(p) => (p.isHidden ? 0 : 1)};
   transition: opacity 300ms ease-out;
+
   ${(p) => {
     if (p.as === 'div') {
       return `background-image: url(${p.src});`

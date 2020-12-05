@@ -1,3 +1,7 @@
 module.exports = {
-  extends: ['stylelint-config-recommended', 'linaria/stylelint-config'],
+  processors: ['stylelint-processor-styled-components'],
+  extends: [
+    'stylelint-config-recommended',
+    'stylelint-config-styled-components',
+  ],
 }
