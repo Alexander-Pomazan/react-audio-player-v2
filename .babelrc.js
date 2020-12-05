@@ -5,7 +5,6 @@ module.exports = {
     ['@babel/preset-env', { modules: isTest ? 'commonjs' : false }],
     '@babel/preset-react',
     '@babel/preset-typescript',
-    'linaria/babel',
   ],
   plugins: ['react-hot-loader/babel'],
 }
